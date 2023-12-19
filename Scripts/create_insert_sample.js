@@ -3,9 +3,9 @@ const { faker } = require('@faker-js/faker');
 
 const client = new Client({
     host: 'localhost',
-    user: 'postgres',
+    user: 'admin',
     port: 5432,
-    password: '250802',
+    password: 'password',
     database: 'DBMS'
 });
 
@@ -153,6 +153,19 @@ async function insertEnrollment() {
     }
 }
 
+
+async function createSuperUser() {
+    const query = `
+        CREATE 
+    `
+    try {
+        const result = await client.query(query);
+        console.log('Table Super User created successfully');
+    } catch (error) {
+        console.error('Error creating table:', error.message);
+    }
+
+}
 
 // insertStudents();
 // createCourse();
