@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const StudentRouter = require('./src/student/routes');
+const MainRouter = require('./src/routes');
 
 const app = express();
 const port = 3000;
@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.use('/api/v1/students', StudentRouter);
+app.use('/api/v1', MainRouter);
 
 // Start the server
 app.listen(port, () => {

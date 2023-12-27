@@ -13,7 +13,7 @@ client.connect();
 
 // Function to insert 30 values into the Student table
 async function insertStudents() {
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 100; i++) {
         const firstName = faker.person.firstName();
         const lastName = faker.person.lastName();
         const email = faker.internet.email({ firstName, lastName });
@@ -45,7 +45,7 @@ async function createCourse() {
         (
             "course_id" SERIAL PRIMARY KEY,
             "name" text NOT NULL,
-            "credits" integer NOT NULL,
+            "credits" integer NOT NULL CHECK (credits >= 1 AND credits <= 4),
             "instructor_id" integer NOT NULL
         )
     `
@@ -62,9 +62,9 @@ async function createEnrollment() {
         CREATE TABLE enrollment
         (
             enrollment_id SERIAL PRIMARY KEY,
-            student_id integer NOT NULL REFERENCES student(student_id),
-            course_id integer NOT NULL REFERENCES course(course_id),
-            grade integer NOT NULL
+            student_id integer NOT NULL REFERENCES student(student_id) ON DELETE CASCADE,
+            course_id integer NOT NULL REFERENCES course(course_id) ON DELETE CASCADE,
+            grade integer NOT NULL CHECK (grade >= 0 AND grade <= 10)
         )
     `
     try {
@@ -83,7 +83,7 @@ async function createStudent() {
             student_id SERIAL PRIMARY KEY,
             first_name text NOT NULL,
             last_name text NOT NULL,
-            email text NOT NULL
+            email text UNIQUE NOT NULL
         )
     `
         try {
