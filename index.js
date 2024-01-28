@@ -3,9 +3,6 @@ const cors = require('cors');
 const MainRouter = require('./src/routes');
 
 const app = express();
-const port = 3000;
-
-
 
 // Define your routes and middleware here
 app.use(express.json());
@@ -18,6 +15,9 @@ app.get('/', (req, res) => {
 app.use('/api/v1', MainRouter);
 
 // Start the server
+
+const port = process.env.PORT || 8080;
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
